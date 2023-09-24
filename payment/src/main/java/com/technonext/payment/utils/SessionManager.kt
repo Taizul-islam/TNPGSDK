@@ -1,5 +1,6 @@
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.recyclerview.widget.RecyclerView
 import com.technonext.payment.R
 
 class SessionManager (context: Context) {
@@ -7,6 +8,8 @@ class SessionManager (context: Context) {
 
     companion object {
         const val USER_TOKEN = "user_token"
+
+
     }
 
     fun saveAuthToken(token: String) {
@@ -18,4 +21,5 @@ class SessionManager (context: Context) {
     fun fetchAuthToken(): String? {
         return prefs.getString(USER_TOKEN, null)
     }
+
 }

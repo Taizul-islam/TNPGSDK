@@ -1,5 +1,6 @@
 package com.technonext.payment.api
 
+import com.technonext.payment.model.Card
 import com.technonext.payment.model.Login
 import com.technonext.payment.model.LoginResponse
 import com.technonext.payment.model.OrderModel
@@ -8,8 +9,6 @@ import com.technonext.payment.model.PaymentResponse
 import com.technonext.payment.model.VerifyPaymentModel
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
@@ -22,5 +21,8 @@ interface ApiService {
 
     @POST("/processing/service/api/payment/order/verify")
     suspend fun verifyOrder(@Body verify: VerifyPaymentModel): Response<PaymentResponse>
+
+    @POST("/processing/service/api/card-type/all")
+    suspend fun getCardList(): Response<Card>
 
 }

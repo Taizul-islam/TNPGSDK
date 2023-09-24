@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.cheezycode.randomquote.utils.NetworkUtils
 import com.technonext.payment.api.ApiService
+import com.technonext.payment.model.Card
 import com.technonext.payment.model.Login
 import com.technonext.payment.model.OrderModel
 import com.technonext.payment.model.OrderResponse
@@ -14,8 +15,9 @@ class HomeRepository(
     private val apiService: ApiService,
     private val applicationContext: Context
 ) {
-    public val token = MutableLiveData<String>()
-    public val orderResponse = MutableLiveData<OrderResponse>()
+    public val token = MutableLiveData<String?>()
+    public val orderResponse = MutableLiveData<OrderResponse?>()
+    public val cardListResponse = MutableLiveData<Card?>()
     suspend fun login(login: Login){
 
         if(NetworkUtils.isInternetAvailable(applicationContext)){
@@ -25,6 +27,21 @@ class HomeRepository(
                 token.postValue(result.body()?.token)
             }else{
                 token.postValue("")
+            }
+        }
+        else{
+            Toast.makeText(applicationContext,"No Internet",Toast.LENGTH_LONG).show()
+        }
+
+    }
+    suspend fun getCardList(){
+
+        if(NetworkUtils.isInternetAvailable(applicationContext)){
+            val result = apiService.getCardList()
+            Log.d("BODY", "cardlist: ${result.body()}")
+            if(result.body() != null){
+                cardListResponse.postValue(result.body())
+            }else{
             }
         }
         else{
@@ -49,6 +66,12 @@ class HomeRepository(
         else{
             Toast.makeText(applicationContext,"No Internet",Toast.LENGTH_LONG).show()
         }
+
+    }
+    fun clear(){
+        token.value=null
+        orderResponse.value=null
+        cardListResponse.value=null
 
     }
 }

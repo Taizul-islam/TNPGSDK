@@ -9,9 +9,10 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".view.WebActivity"
+
             android:exported="false" />
         <activity
-            android:name=".view.HomeActivity"
+            android:name=".view.PaymentActivity"
             android:exported="false" />
     </application>
 

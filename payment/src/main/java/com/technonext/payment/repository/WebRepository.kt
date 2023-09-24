@@ -16,7 +16,7 @@ class WebRepository(
     private val apiService: ApiService,
     private val applicationContext: Context
 ) {
-    public val paymentResponse = MutableLiveData<PaymentResponse>()
+    public var paymentResponse = MutableLiveData<PaymentResponse?>()
     suspend fun verifyPayment(paymentModel: VerifyPaymentModel){
 
         if(NetworkUtils.isInternetAvailable(applicationContext)){
@@ -32,6 +32,9 @@ class WebRepository(
             Toast.makeText(applicationContext,"No Internet",Toast.LENGTH_LONG).show()
         }
 
+    }
+    fun clear(){
+        paymentResponse.value=null
     }
 
 }

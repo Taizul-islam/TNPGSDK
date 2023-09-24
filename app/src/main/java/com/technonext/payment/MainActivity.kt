@@ -1,30 +1,38 @@
 package com.technonext.payment
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import com.technonext.payment.model.Customer
+import com.technonext.payment.model.PaymentResponse
 import com.technonext.payment.model.Url
-import com.technonext.payment.utils.TechnoNextPaymentGateway
+import com.technonext.payment.view.PaymentActivity
 
 class MainActivity : AppCompatActivity()  {
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val btn=findViewById<Button>(R.id.btnPay)
         val customer= Customer(
-            "018829209",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
+            "Dhaka",
+            "BD",
+            "12",
+            "12",
+            "mdtaizulislam50@gmail.com",
+            "Taizul",
+            "Islam",
+            "01723733950"
         )
         val url=Url(
             "http://localhost/PaymentGatewayClient/success.php",
@@ -33,34 +41,41 @@ class MainActivity : AppCompatActivity()  {
             "http://localhost/PaymentGatewayClient/success.php"
         )
         btn.setOnClickListener {
-            TechnoNextPaymentGateway.pay(this,"10",customer,url)
-//            val intent = Intent(this, HomeActivity::class.java)
-//            intent.putExtra("amount","10")
-//            intent.putExtra("customer",customer)
-//            intent.putExtra("url",url)
-//            startForResult.launch(intent)
+            val intent = Intent(this, PaymentActivity::class.java)
+            intent.putExtra("amount","10")
+            intent.putExtra("customer",customer)
+            intent.putExtra("url",url)
+            startForResult.launch(intent)
         }
 
     }
 
-//    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-//        if (result.resultCode == Activity.RESULT_OK) {
-//            val intent = result.data
-//            Log.d("value", "data  : ${intent?.getStringExtra("value")}")
-//        }
-//    }
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+        val intent = result.data
+        if (result.resultCode == Activity.RESULT_OK) {
+            Log.d("RESULT OK", "onActivityResult: result ok")
+            val response: PaymentResponse? =intent?.getSerializableExtra("response", PaymentResponse::class.java)
+            Log.d("RETURN VALUE", "onActivityResult: ${response?.txnId}")
+            if (response != null) {
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setTitle("Message!")
+                builder.setMessage("Transaction Successfully Done\nTransaction ID: ${response.txnId}")
+                builder.setPositiveButton(
+                    "Ok"
+                ) { dialog, which -> dialog.cancel() }
+                builder.create().show()
+            }else{
+                Toast.makeText(this,"Value return null",Toast.LENGTH_LONG).show()
+            }
 
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-          if (resultCode == Activity.RESULT_OK) {
-            Log.d("value", "data  : ${data?.getStringExtra("value")}")
-          }
-        if (resultCode == Activity.RESULT_CANCELED) {
-            Log.d("value", "data cancelled : ${data?.getStringExtra("value")}")
+
         }
-
+        if (result.resultCode == Activity.RESULT_CANCELED) {
+            Log.d("value", "data cancelled : ${intent?.getStringExtra("value")}")
+        }
     }
+
 
 }
 

@@ -1,23 +1,21 @@
-
+package com.technonext.payment.viewmodel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
-import com.cheezycode.randomquote.repository.HomeRepository
 import com.cheezycode.randomquote.repository.WebRepository
-import com.technonext.payment.model.Customer
-import com.technonext.payment.model.Login
-import com.technonext.payment.model.OrderModel
-import com.technonext.payment.model.OrderResponse
 import com.technonext.payment.model.PaymentResponse
 import com.technonext.payment.model.VerifyPaymentModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class WebViewModel(private val repository: WebRepository) : ViewModel() {
+public class WebViewModel(private val repository: WebRepository) : ViewModel() {
 
 
-    val paymentResponse : LiveData<PaymentResponse>
+    var paymentResponse : MutableLiveData<PaymentResponse?>? =null
         get() = repository.paymentResponse
 
     fun makeOrder(id:Int){
@@ -26,6 +24,17 @@ class WebViewModel(private val repository: WebRepository) : ViewModel() {
             repository.verifyPayment(paymentModel)
         }
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        clear()
+    }
+
+    private fun clear(){
+        repository.clear()
+    }
+
+
 
 
 

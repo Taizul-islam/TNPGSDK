@@ -4,7 +4,7 @@ data class OrderModel(
     val amount: String,
     val cancelUrl: String,
     val cardType: Int,
-    val channel: Int,
+    val channel: Int?,
     val clientType: String,
     val currency: String,
     val customer: Customer,

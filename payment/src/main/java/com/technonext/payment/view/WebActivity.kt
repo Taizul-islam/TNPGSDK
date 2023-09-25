@@ -23,7 +23,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
-import com.cheezycode.randomquote.utils.NetworkUtils
 import com.technonext.payment.R
 import com.technonext.payment.model.StatusCode
 import com.technonext.payment.model.Url
@@ -93,7 +92,29 @@ class WebActivity : AppCompatActivity() {
 
         redirectUrl?.let { showTheWebsite(it) }
 
+        mainViewModel.errorResponse?.observe(this){
+            if (it != null) {
+                if(it.isNotEmpty()){
+                    Toast.makeText(this,it[0].message,Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        mainViewModel.execption?.observe(this){
+            if (it != null) {
+                if(it.isNotEmpty()){
+                    if(it.isNotEmpty()){
+                        val builder = AlertDialog.Builder(this@WebActivity)
+                        builder.setMessage(it.toString())
+                        builder.setTitle("Alert")
+                        builder.setPositiveButton(
+                            "Ok"
+                        ) { dialog, which -> dialog.dismiss() }
 
+                        builder.create().show()
+                    }
+                }
+            }
+        }
 
         mainViewModel.paymentResponse?.observe(this) {
             if (it != null) {
@@ -190,6 +211,7 @@ class WebActivity : AppCompatActivity() {
         }
 
     }
+
     fun isURLString(url: String?): Boolean {
         return url?.let {
                 Pattern.compile("^((http?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$")

@@ -25,5 +25,6 @@ data class PaymentResponse(
     val txnId: String,
     val udf1: String,
     val udf2: String,
-    val udf3: String
+    val udf3: String,
+    val apiErrors: List<ApiError>
 ):Serializable

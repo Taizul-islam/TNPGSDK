@@ -2,6 +2,8 @@ package com.technonext.payment.view
 
 import HomeViewModel
 import SessionManager
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -10,6 +12,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -35,7 +39,7 @@ import com.technonext.payment.utils.Common
 
 
 class PaymentActivity : AppCompatActivity() {
-    lateinit var mainViewModel: HomeViewModel
+    private lateinit var mainViewModel: HomeViewModel
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         @RequiresApi(Build.VERSION_CODES.TIRAMISU)
         override fun onReceive(arg0: Context, intent: Intent) {
@@ -54,6 +58,7 @@ class PaymentActivity : AppCompatActivity() {
 
         }
     }
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +66,7 @@ class PaymentActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(com.technonext.payment.R.id.toolbar)
         val tab: TabLayout = findViewById(com.technonext.payment.R.id.tabs)
         val viewPager: ViewPager2 = findViewById(com.technonext.payment.R.id.viewPager)
-        val btnPayNow: Button = findViewById(com.technonext.payment.R.id.btnPayNow)
+        val btnPayNow: TextView = findViewById(com.technonext.payment.R.id.tv_pay)
         setSupportActionBar(toolbar)
         val repository = (application as App).quoteRepository
 
@@ -92,7 +97,6 @@ class PaymentActivity : AppCompatActivity() {
         viewPager.currentItem = 0
         TabLayoutMediator(tab, viewPager) { tabs, position ->
             tabs.text = adapter.getTabTitle(position)
-            Log.d("JAHAHA", "onCreate: $position")
 
 
 
@@ -117,6 +121,7 @@ class PaymentActivity : AppCompatActivity() {
         }
         mainViewModel.login()
         mainViewModel.token?.observe(this, Observer {
+            Log.d("TOKEN RETURN", "onCreate: $it")
             val sessionManager=SessionManager(this)
             if (it != null) {
                 sessionManager.saveAuthToken(it)
@@ -128,6 +133,30 @@ class PaymentActivity : AppCompatActivity() {
                 }
             }
         })
+        mainViewModel.errorResponse?.observe(this){
+            if (it != null) {
+                if(it.isNotEmpty()){
+                    Toast.makeText(this,it[0].message,Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+        mainViewModel.execption?.observe(this){
+            if (it != null) {
+                if(it.isNotEmpty()){
+                    if(it.isNotEmpty()){
+                        val builder = AlertDialog.Builder(this@PaymentActivity)
+                        builder.setMessage(it.toString())
+                        builder.setTitle("Alert")
+                        builder.setPositiveButton(
+                            "Ok"
+                        ) { dialog, which -> dialog.dismiss()
+                        finish()}
+
+                        builder.create().show()
+                    }
+                }
+            }
+        }
 
         mainViewModel.orderResponse?.observe(this) {
             if (it != null) {
@@ -135,9 +164,7 @@ class PaymentActivity : AppCompatActivity() {
 
                     Log.d("URLRYY", "onCreate: ${it.checkoutUrl}")
                     val i = Intent(this, WebActivity::class.java)
-                    if (it != null) {
-                        i.putExtra("url",it.checkoutUrl)
-                    }
+                    i.putExtra("url",it.checkoutUrl)
                     i.putExtra("allurl",url)
                     i.putExtra("order_id",it.paymentDetail.paymentOrderId)
                     startActivity(i)
@@ -155,7 +182,6 @@ class PaymentActivity : AppCompatActivity() {
         registerReceiver(broadcastReceiver, IntentFilter("finish_activity"))
 
     }
-    //01770618575
 
 
 
@@ -163,9 +189,8 @@ class PaymentActivity : AppCompatActivity() {
 
 
 
-    @Deprecated("Deprecated in Java",
-        ReplaceWith("super.onBackPressed()", "androidx.appcompat.app.AppCompatActivity")
-    )
+
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         return
     }

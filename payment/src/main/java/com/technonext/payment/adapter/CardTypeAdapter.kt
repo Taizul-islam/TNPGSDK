@@ -1,8 +1,8 @@
 package com.technonext.payment.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +11,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.technonext.payment.R
-import com.technonext.payment.model.Card
 import com.technonext.payment.model.CardType
-import com.technonext.payment.utils.Common
 
 
-public class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
+class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
     RecyclerView.Adapter<CardTypeAdapter.MyViewHolder>() {
     private var onClickListener: OnClickListener? = null
-    var inflater: LayoutInflater
-    var list = emptyList<CardType>()
-    var cardList= emptyList<CardType>()
-    var mobileList= emptyList<CardType>()
-    var netList= emptyList<CardType>()
-    var mContext: Context
-    var from: String = ""
+    private var inflater: LayoutInflater
+    private var list = emptyList<CardType>()
+    private var cardList = emptyList<CardType>()
+    private var mobileList = emptyList<CardType>()
+    private var netList = emptyList<CardType>()
+    private var mContext: Context
+    private var from: String = ""
 
 
     init {
@@ -33,15 +31,9 @@ public class CardTypeAdapter(context: Context, data: List<CardType>, from: Strin
         mContext = context
         this.list = data
         this.from = from
-        if(from=="card"){
-            cardList=list.filter { s->s.category==1 }
-        }
-        if(from=="mobile"){
-            mobileList=list.filter { s->s.category==3 }
-        }
-        if(from=="net"){
-            netList=list.filter { s->s.category==2 }
-        }
+        cardList = list.filter { s -> s.category == 1 }
+        mobileList = list.filter { s -> s.category == 3 }
+        netList = list.filter { s -> s.category == 2 }
 
 
     }
@@ -51,17 +43,19 @@ public class CardTypeAdapter(context: Context, data: List<CardType>, from: Strin
         viewType: Int
     ): MyViewHolder {
         return MyViewHolder(
-            inflater.inflate(R.layout.bank_list_recycler, parent, false), viewType
+            inflater.inflate(R.layout.bank_list_recycler, parent, false)
         )
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onBindViewHolder(
         holder: MyViewHolder,
         position: Int
     ) {
 
-        val item = if(from=="mobile") mobileList[position] else if(from=="card") cardList[position] else netList[position]
-        Log.d("ADAPTER", "onBindViewHolder: ${item.id}")
+        val item =
+            if (from == "mobile") mobileList[position] else if (from == "card") cardList[position] else netList[position]
+
         Glide
             .with(mContext)
             .load(item.logoUrl)
@@ -72,91 +66,26 @@ public class CardTypeAdapter(context: Context, data: List<CardType>, from: Strin
         holder.tvStatus.text = item.isActive.toString()
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
-                for (i in mobileList){
-                    i.isSelected=false
-                    Log.d("SELECTEDMOBILE", "onBindViewHolder: ${i.isSelected}")
+                for (i in mobileList) {
+                    i.isSelected = false
                 }
-                for (i in cardList){
-                    i.isSelected=false
-                    Log.d("SELECTEDLOG", "onBindViewHolder: ${i.isSelected}")
+                for (i in cardList) {
+                    i.isSelected = false
                 }
-                for (i in netList){
-                    i.isSelected=false
-                    Log.d("SELECTEDLOG", "onBindViewHolder: ${i.isSelected}")
+                for (i in netList) {
+                    i.isSelected = false
                 }
-
-
-                for (i in list){
-                    Log.d("SELECTEDLOG", "onBindViewHolder: ${i.isSelected}")
-                }
-
-
-                item.isSelected=true
+                item.isSelected = true
                 notifyDataSetChanged()
-
-                Log.d("FROMAAAAAA", "onBindViewHolder: ${item.isSelected}")
-//                if (from == "card") {
-//
-//
-//
-//
-//                    val previousSelectedPosition = Common.SELECTED_POSITION_CARD
-//                    Common.SELECTED_POSITION_CARD = holder.adapterPosition
-//                    notifyItemChanged(previousSelectedPosition)
-//                    notifyItemChanged(Common.SELECTED_POSITION_CARD)
-//
-//                }
-//                if (from == "mobile") {
-//
-//
-//
-//                    val previousSelectedPosition = Common.SELECTED_POSITION_MOBILE
-//                    Common.SELECTED_POSITION_MOBILE = holder.adapterPosition
-//                    notifyItemChanged(previousSelectedPosition)
-//                    notifyItemChanged(Common.SELECTED_POSITION_MOBILE)
-//                }
-//                if (from == "net") {
-//
-//
-//
-//                    val previousSelectedPosition = Common.SELECTED_POSITION_NET
-//                    Common.SELECTED_POSITION_NET = holder.adapterPosition
-//                    notifyItemChanged(previousSelectedPosition)
-//                    notifyItemChanged(Common.SELECTED_POSITION_NET)
-//                }
                 onClickListener!!.onClick(position, item)
             }
         }
 
-        if(item.isSelected){
-            holder.iv_status.setColorFilter(Color.GREEN)
-        }else{
-            holder.iv_status.setColorFilter(Color.GRAY)
+        if (item.isSelected) {
+            holder.ivStatus.setColorFilter(Color.GREEN)
+        } else {
+            holder.ivStatus.setColorFilter(Color.GRAY)
         }
-
-
-
-
-
-//        if (position == Common.SELECTED_POSITION_CARD&&from=="card") {
-//            Common.SELECTED_POSITION_MOBILE=RecyclerView.NO_POSITION
-//            Common.SELECTED_POSITION_NET=RecyclerView.NO_POSITION
-//            notifyItemChanged(RecyclerView.NO_POSITION)
-//            holder.iv_status.setColorFilter(Color.GREEN)
-//        }
-//        else if (position == Common.SELECTED_POSITION_MOBILE&&from=="mobile") {
-//            Common.SELECTED_POSITION_CARD=RecyclerView.NO_POSITION
-//            Common.SELECTED_POSITION_NET=RecyclerView.NO_POSITION
-//            notifyItemChanged(RecyclerView.NO_POSITION)
-//            holder.iv_status.setColorFilter(Color.GREEN)
-//        }
-//        else if (position == Common.SELECTED_POSITION_NET&&from=="net") {
-//            Common.SELECTED_POSITION_MOBILE=RecyclerView.NO_POSITION
-//            Common.SELECTED_POSITION_CARD=RecyclerView.NO_POSITION
-//            holder.iv_status.setColorFilter(Color.GREEN)
-//        } else {
-//            holder.iv_status.setColorFilter(Color.GRAY)
-//        }
 
 
     }
@@ -166,19 +95,18 @@ public class CardTypeAdapter(context: Context, data: List<CardType>, from: Strin
         this.onClickListener = onClickListener
     }
 
-    // onClickListener Interface
     interface OnClickListener {
         fun onClick(position: Int, model: CardType)
     }
 
     override fun getItemCount(): Int {
-        if(from=="mobile"){
+        if (from == "mobile") {
             return mobileList.size
         }
-        if(from=="card"){
-            return cardList.size
-        }else{
-            return netList.size
+        return if (from == "card") {
+            cardList.size
+        } else {
+            netList.size
         }
 
     }
@@ -187,19 +115,18 @@ public class CardTypeAdapter(context: Context, data: List<CardType>, from: Strin
         return position
     }
 
-    inner class MyViewHolder(itemView: View, viewType: Int) :
+    inner class MyViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var merchantImage: ImageView
-        var iv_status: ImageView
+        var ivStatus: ImageView
         var tvName: TextView
         var tvStatus: TextView
 
         init {
             merchantImage = itemView.findViewById<View>(R.id.imgLogo) as ImageView
-            iv_status = itemView.findViewById<View>(R.id.iv_status) as ImageView
+            ivStatus = itemView.findViewById<View>(R.id.iv_status) as ImageView
             tvName = itemView.findViewById<View>(R.id.tv_name) as TextView
             tvStatus = itemView.findViewById<View>(R.id.tv_status) as TextView
-            //selectedItemPosition=adapterPosition
 
         }
     }

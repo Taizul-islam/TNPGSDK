@@ -1,11 +1,9 @@
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.viewModelScope
 import com.cheezycode.randomquote.repository.HomeRepository
+import com.technonext.payment.model.ApiError
 import com.technonext.payment.model.Card
 import com.technonext.payment.model.Customer
 import com.technonext.payment.model.Login
@@ -39,6 +37,11 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         get() = repository.orderResponse
     var cardListResponse : MutableLiveData<Card?>? =null
         get() = repository.cardListResponse
+    var errorResponse : MutableLiveData<List<ApiError>?>? =null
+        get() = repository.errorResponse
+
+    var execption : MutableLiveData<String?>? =null
+        get() = repository.exception
 
 
     fun makeOrder(cardType:Int,channel:Int,customer: Customer,url: Url,amount:String){
@@ -69,6 +72,7 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
         token=null
         orderResponse=null
         cardListResponse=null
+        errorResponse=null
     }
 
 

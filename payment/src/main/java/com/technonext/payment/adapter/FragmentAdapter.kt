@@ -9,7 +9,7 @@ class AdapterTabPager(activity: FragmentActivity?) : FragmentStateAdapter(activi
     private val mFragmentList: MutableList<Fragment> = ArrayList()
     private val mFragmentTitleList: MutableList<String> = ArrayList()
 
-    public fun getTabTitle(position : Int): String{
+    fun getTabTitle(position : Int): String{
         return mFragmentTitleList[position]
     }
 

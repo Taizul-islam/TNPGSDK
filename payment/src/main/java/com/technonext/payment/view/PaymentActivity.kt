@@ -13,6 +13,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -36,6 +37,7 @@ import com.technonext.payment.model.PaymentResponse
 import com.technonext.payment.model.Url
 import com.technonext.payment.utils.App
 import com.technonext.payment.utils.Common
+import com.technonext.payment.utils.SDKType
 
 
 class PaymentActivity : AppCompatActivity() {
@@ -45,8 +47,6 @@ class PaymentActivity : AppCompatActivity() {
         override fun onReceive(arg0: Context, intent: Intent) {
             val action = intent.action
             if (action == "finish_activity") {
-                Log.d("CALLED BROADCAST", "onReceive: called")
-                intent.action = "323232"
                 val response=intent.getSerializableExtra("response", PaymentResponse::class.java)
                 val i=Intent()
                 i.putExtra("response",response)
@@ -63,28 +63,26 @@ class PaymentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        val toolbar: Toolbar = findViewById(com.technonext.payment.R.id.toolbar)
-        val tab: TabLayout = findViewById(com.technonext.payment.R.id.tabs)
+        val tab: TabLayout = findViewById(R.id.tabs)
+        val tvPayAmount: TextView = findViewById(R.id.tvPayAmount)
+        val ivBack: ImageView = findViewById(R.id.ivBack)
+        val tvLiveStatus: TextView = findViewById(R.id.tvLiveStatus)
+        val btnPayNow: LinearLayout = findViewById(R.id.btnPayNow)
         val viewPager: ViewPager2 = findViewById(com.technonext.payment.R.id.viewPager)
-        val btnPayNow: TextView = findViewById(com.technonext.payment.R.id.tv_pay)
-        setSupportActionBar(toolbar)
         val repository = (application as App).quoteRepository
 
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setHomeButtonEnabled(true)
-            supportActionBar!!.setTitle("Payment Gateway")
         }
 
-        toolbar.setNavigationOnClickListener {
-
-            finish()
-
-        }
         mainViewModel = ViewModelProvider(this, HomeViewModelFactory(repository))[HomeViewModel::class.java]
         val amount=intent.getStringExtra("amount")
         val customer=intent.getSerializableExtra("customer", Customer::class.java)
         val url=intent.getSerializableExtra("url",Url::class.java)
+        Common.sdk= intent.getSerializableExtra("sdk_type",SDKType::class.java)!!
+        tvLiveStatus.text=if(Common.sdk==SDKType.TEST) "Test Mode" else ""
+        Log.d("MAINACTIVITY", "onCreate: ${Common.sdk}")
         Log.d("amount", "onCreate: $amount")
         Log.d("customer", "onCreate: ${customer?.mobileNo}")
         Log.d("url", "onCreate: ${url?.successUrl}")
@@ -104,7 +102,7 @@ class PaymentActivity : AppCompatActivity() {
 
 
 
-        btnPayNow.text="Pay $amount"+"TK"
+        tvPayAmount.text="Pay $amount"+"TK"
 
         btnPayNow.setOnClickListener {
             if(Common.SELECTED_ID==0){
@@ -118,6 +116,9 @@ class PaymentActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+        ivBack.setOnClickListener {
+            finish()
         }
         mainViewModel.login()
         mainViewModel.token?.observe(this, Observer {

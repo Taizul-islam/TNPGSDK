@@ -2,12 +2,12 @@ package com.technonext.payment.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.technonext.payment.R
@@ -59,11 +59,15 @@ class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
         Glide
             .with(mContext)
             .load(item.logoUrl)
-            .centerCrop()
             .into(holder.merchantImage)
 
         holder.tvName.text = item.name
-        holder.tvStatus.text = item.isActive.toString()
+        holder.tvStatus.text = if (item.isActive) "Active" else "Inactive"
+        if(item.isActive){
+           holder.statusBG.background= ContextCompat.getDrawable(mContext, R.drawable.active_status_bg)
+        }else{
+            holder.statusBG.background= ContextCompat.getDrawable(mContext, R.drawable.in_active_status_bg)
+        }
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 for (i in mobileList) {
@@ -82,9 +86,9 @@ class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
         }
 
         if (item.isSelected) {
-            holder.ivStatus.setColorFilter(Color.GREEN)
+            holder.ivStatus.visibility=View.VISIBLE
         } else {
-            holder.ivStatus.setColorFilter(Color.GRAY)
+            holder.ivStatus.visibility=View.INVISIBLE
         }
 
 
@@ -121,12 +125,14 @@ class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
         var ivStatus: ImageView
         var tvName: TextView
         var tvStatus: TextView
+        var statusBG: View
 
         init {
             merchantImage = itemView.findViewById<View>(R.id.imgLogo) as ImageView
             ivStatus = itemView.findViewById<View>(R.id.iv_status) as ImageView
             tvName = itemView.findViewById<View>(R.id.tv_name) as TextView
             tvStatus = itemView.findViewById<View>(R.id.tv_status) as TextView
+            statusBG = itemView.findViewById<View>(R.id.statusBG) as View
 
         }
     }

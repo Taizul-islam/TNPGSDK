@@ -2,6 +2,9 @@ package com.cheezycode.randomquote.api
 
 import SessionManager
 import com.technonext.payment.di.AuthInterceptor
+import com.technonext.payment.utils.Common
+import com.technonext.payment.utils.Constants
+import com.technonext.payment.utils.SDKType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitHelper {
-    private const val BASE_URL = "http://18.141.119.9:8080"
+    private val BASE_URL = if(Common.sdk==SDKType.TEST) Constants.testUrl else Constants.liveURL
 
     fun getInstance(sessionManager: SessionManager) : Retrofit {
         val httpClient = OkHttpClient.Builder()

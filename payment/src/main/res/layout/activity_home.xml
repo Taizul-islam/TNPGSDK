@@ -1,322 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".view.PaymentActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:fitsSystemWindows="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnPayNow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".view.PaymentActivity">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsingToolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:layout_height="wrap_content">
 
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/ssl_toolbar" />
-
-            <LinearLayout
-                android:id="@+id/header_layout_ll"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsingToolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:fitsSystemWindows="true"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_scrollFlags="scroll|enterAlways">
+
 
                 <LinearLayout
+                    android:id="@+id/header_layout_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="10dp"
-                            android:foreground="@drawable/ic_launcher_background">
-
-                            <ImageView
-                                android:id="@+id/merchant_logo_iv"
-                                android:layout_width="80dp"
-                                android:layout_height="80dp"
-                                android:padding="8dp" />
-                        </FrameLayout>
-
                         <ImageView
-                            android:id="@+id/iv_language"
+                            android:id="@+id/ivBack"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:maxWidth="30dp"
+                            android:minWidth="30dp"
+                            android:src="@drawable/baseline_keyboard_backspace_24"
+                            app:tint="@color/black" />
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:paddingRight="10dp"
-                            android:src="@drawable/ic_launcher_background" />
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="PAY with TNPG"
+                            android:textColor="@color/black" />
+
                     </RelativeLayout>
 
-
-                    <TextView
-                        android:id="@+id/tv_merchant_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="Bomb Bazar"
-                        android:textAlignment="center"
-                        android:textSize="18sp" />
+                        android:layout_marginTop="20dp"
+                        app:cardBackgroundColor="@color/black"
+                        app:cardCornerRadius="250dp">
 
-                    <TextView
-                        android:id="@+id/tv_user_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:text="---"
-                        android:textAlignment="center"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/clickSupport"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_launcher_background" />
-
-                        <TextView
-                            android:id="@+id/tv_support"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Support"
-                             />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/clickFAQ"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_launcher_background" />
-
-                        <TextView
-                            android:id="@+id/tv_faq"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Faq"
-                             />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_offer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            app:cardCornerRadius="250dp">
 
                             <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/ic_launcher_background" />
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/logo" />
 
-                            <LinearLayout
-                                android:id="@+id/badgeLayout"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="right"
+                        </androidx.cardview.widget.CardView>
 
-                                android:padding="2dp"
-                                android:visibility="gone">
+                    </androidx.cardview.widget.CardView>
 
-                                <TextView
-                                    android:id="@+id/badge"
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
-                                    android:gravity="center"
-                                    android:text="99+"
-                                    android:textColor="@color/white"
-                                    android:textSize="7sp" />
-                            </LinearLayout>
-                        </FrameLayout>
-
-                        <TextView
-                            android:id="@+id/tv_offer"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Offers"
-                             />
-                    </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/layout_top_login"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="TechnoNext Payment Gateway"
+                        android:textColor="@color/black"
+                        android:textSize="17sp" />
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:id="@+id/tvLiveStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/ic_launcher_background" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
 
-                        <TextView
-                            android:id="@+id/tv_logout"
+                        <LinearLayout
+                            android:id="@+id/clickSupport"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Login"
-                            android:textColor="?attr/colorPrimary" />
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/support" />
+
+                            <TextView
+                                android:id="@+id/tv_support"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Support"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/clickFAQ"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:src="@drawable/support" />
+
+                            <TextView
+                                android:id="@+id/tv_faq"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Faq"
+                                android:textColor="@color/black" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-        <LinearLayout
-            android:id="@+id/mainLyout1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="2dp"
 
-            android:visibility="visible">
-
-            <TextView
-                android:id="@+id/timerText"
-                android:layout_width="wrap_content"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:text="AAA"
-                android:textColor="@color/white"
-                android:textSize="11sp" />
+                android:background="@color/white"
+                app:tabGravity="center"
+                app:tabIndicatorColor="@color/black"
+                app:tabSelectedTextColor="@color/black"
+                app:tabIndicatorHeight="2dp"
+                app:tabTextColor="#808080" />
 
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+        <androidx.viewpager2.widget.ViewPager2
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?attr/colorPrimary"
-            app:tabIndicatorHeight="0dp" />
+            android:layout_height="match_parent" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white" />
-    </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:id="@+id/btnPayNow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/logo_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <RelativeLayout
-            android:id="@+id/layout_amount"
+        <TextView
+            android:id="@+id/tvPayAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#F6F6F6"
-            android:padding="8dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv_amount_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="amount_colon"
-
-                    android:textSize="12sp" />
-                <TextView
-                    android:id="@+id/tv_amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="0.00 BDT"
-                    android:textSize="12sp" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/tv_charge_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="additional_fees_colon"
-                    android:textSize="12sp" />
-                <TextView
-                    android:id="@+id/tv_charge"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="0.00 BDT"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
-        <LinearLayout
-            android:id="@+id/layout_pay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/iv_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:src="@drawable/ic_launcher_background" />
+            android:text="PAY NOW"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/tv_pay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="pay"
-                android:textColor="@color/white"
-                android:textSize="16sp" />
-        </LinearLayout>
     </LinearLayout>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+

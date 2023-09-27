@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.technonext.payment.model.Customer
 import com.technonext.payment.model.PaymentResponse
 import com.technonext.payment.model.Url
+import com.technonext.payment.utils.SDKType
 import com.technonext.payment.view.PaymentActivity
 
 class MainActivity : AppCompatActivity()  {
@@ -40,11 +41,13 @@ class MainActivity : AppCompatActivity()  {
             "http://localhost/PaymentGatewayClient/success.php",
             "http://localhost/PaymentGatewayClient/success.php"
         )
+
         btn.setOnClickListener {
             val intent = Intent(this, PaymentActivity::class.java)
             intent.putExtra("amount","10")
             intent.putExtra("customer",customer)
             intent.putExtra("url",url)
+            intent.putExtra("sdk_type",SDKType.TEST)
             startForResult.launch(intent)
         }
 

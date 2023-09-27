@@ -27,6 +27,7 @@ import com.technonext.payment.R
 import com.technonext.payment.model.StatusCode
 import com.technonext.payment.model.Url
 import com.technonext.payment.utils.App
+import com.technonext.payment.utils.Common
 import java.util.regex.Pattern
 
 
@@ -62,7 +63,7 @@ class WebActivity : AppCompatActivity() {
     private val timeOutValue: String? = null
     private val timer: CountDownTimer? = null
     private val timerText: TextView? = null
-    var allurl:Url?=null;
+    var allurl:Url?=null
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,7 +83,7 @@ class WebActivity : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setHomeButtonEnabled(true)
-            supportActionBar!!.setTitle("Pay Now")
+            supportActionBar!!.title = Common.SELECTED_TITLE
         }
 
         toolbar.setNavigationOnClickListener {

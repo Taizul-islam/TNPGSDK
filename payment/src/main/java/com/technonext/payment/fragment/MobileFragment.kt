@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.cheezycode.randomquote.viewmodels.HomeViewModelFactory
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.technonext.payment.R
 import com.technonext.payment.adapter.CardTypeAdapter
 import com.technonext.payment.model.CardType
@@ -28,6 +29,7 @@ class MobileFragment : Fragment() {
     ): View? {
 
         val view= inflater.inflate(R.layout.fragment_card, container, false)
+
         val repository = (requireActivity().application as App).quoteRepository
         val mobileBankingRecycler = view.findViewById<RecyclerView>(R.id.recyclerView)
         mainViewModel = ViewModelProvider(requireActivity(), HomeViewModelFactory(repository))[HomeViewModel::class.java]
@@ -37,8 +39,10 @@ class MobileFragment : Fragment() {
                     list = it.cardTypeList
                     adapter = CardTypeAdapter(requireActivity(), list, "mobile")
                     Common.setData(requireActivity(), mobileBankingRecycler, adapter!!)
+
                 }
             }
+
         }
 
         return view

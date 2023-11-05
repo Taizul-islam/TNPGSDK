@@ -61,28 +61,29 @@
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
                             android:gravity="center"
+                            android:textSize="20sp"
                             android:text="PAY with TNPG"
                             android:textColor="@color/black" />
 
                     </RelativeLayout>
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
                         app:cardBackgroundColor="@color/black"
                         app:cardCornerRadius="250dp">
 
                         <androidx.cardview.widget.CardView
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
                             android:layout_gravity="center"
                             app:cardCornerRadius="250dp">
 
                             <ImageView
-                                android:layout_width="100dp"
-                                android:layout_height="100dp"
+                                android:layout_width="80dp"
+                                android:layout_height="80dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/logo" />
 
@@ -110,6 +111,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:background="@color/white"
+                        android:layout_marginBottom="10dp"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
                         android:padding="10dp">
@@ -138,14 +141,14 @@
                             android:id="@+id/clickFAQ"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="20dp"
                             android:gravity="center"
                             android:orientation="vertical">
 
                             <ImageView
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:src="@drawable/support" />
+                                android:src="@drawable/faq" />
 
                             <TextView
                                 android:id="@+id/tv_faq"
@@ -160,15 +163,20 @@
 
 
             <com.google.android.material.tabs.TabLayout
+
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                app:tabGravity="center"
-                app:tabIndicatorColor="@color/black"
+                app:tabMode="fixed"
+                android:elevation="0dp"
+                app:tabIndicatorFullWidth="true"
+                app:tabBackground="@color/white"
+                app:tabIndicatorGravity="stretch"
+                app:tabIndicatorAnimationMode="elastic"
                 app:tabSelectedTextColor="@color/black"
-                app:tabIndicatorHeight="2dp"
-                app:tabTextColor="#808080" />
+                app:tabIndicatorColor="@null"
+                app:tabIndicator="@drawable/tab_indicator"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -188,9 +196,9 @@
     <LinearLayout
         android:id="@+id/btnPayNow"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_gravity="center_horizontal|bottom"
+        android:layout_height="60dp"
         android:background="@drawable/logo_bg"
+        android:layout_gravity="center_horizontal|bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -206,6 +214,18 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/btnPayNow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/coordinatorLayout"
+        app:layout_constraintTop_toTopOf="@+id/coordinatorLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

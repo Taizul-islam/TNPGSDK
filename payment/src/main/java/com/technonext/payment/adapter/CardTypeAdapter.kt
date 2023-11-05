@@ -61,13 +61,13 @@ class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
             .load(item.logoUrl)
             .into(holder.merchantImage)
 
-        holder.tvName.text = item.name
-        holder.tvStatus.text = if (item.isActive) "Active" else "Inactive"
-        if(item.isActive){
-           holder.statusBG.background= ContextCompat.getDrawable(mContext, R.drawable.active_status_bg)
-        }else{
-            holder.statusBG.background= ContextCompat.getDrawable(mContext, R.drawable.in_active_status_bg)
-        }
+//        holder.tvName.text = item.name
+//        holder.tvStatus.text = if (item.isActive) "Active" else "Inactive"
+//        if(item.isActive){
+//           holder.statusBG.background= ContextCompat.getDrawable(mContext, R.drawable.active_status_bg)
+//        }else{
+//            holder.statusBG.background= ContextCompat.getDrawable(mContext, R.drawable.in_active_status_bg)
+//        }
         holder.itemView.setOnClickListener {
             if (onClickListener != null) {
                 for (i in mobileList) {
@@ -123,16 +123,16 @@ class CardTypeAdapter(context: Context, data: List<CardType>, from: String) :
         RecyclerView.ViewHolder(itemView) {
         var merchantImage: ImageView
         var ivStatus: ImageView
-        var tvName: TextView
-        var tvStatus: TextView
-        var statusBG: View
+//        var tvName: TextView
+//        var tvStatus: TextView
+//        var statusBG: View
 
         init {
             merchantImage = itemView.findViewById<View>(R.id.imgLogo) as ImageView
             ivStatus = itemView.findViewById<View>(R.id.iv_status) as ImageView
-            tvName = itemView.findViewById<View>(R.id.tv_name) as TextView
-            tvStatus = itemView.findViewById<View>(R.id.tv_status) as TextView
-            statusBG = itemView.findViewById<View>(R.id.statusBG) as View
+//            tvName = itemView.findViewById<View>(R.id.tv_name) as TextView
+//            tvStatus = itemView.findViewById<View>(R.id.tv_status) as TextView
+//            statusBG = itemView.findViewById<View>(R.id.statusBG) as View
 
         }
     }

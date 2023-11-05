@@ -12,10 +12,14 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.technonext.payment.model.Customer
 import com.technonext.payment.model.PaymentResponse
 import com.technonext.payment.model.Url
 import com.technonext.payment.utils.SDKType
+import com.technonext.payment.utils.TechnoNextPaymentGateway
 import com.technonext.payment.view.PaymentActivity
 
 class MainActivity : AppCompatActivity()  {
@@ -24,6 +28,11 @@ class MainActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+
+        setStatusBarColor(R.color.white)
+
         val btn=findViewById<Button>(R.id.btnPay)
         val customer= Customer(
             "Dhaka",
@@ -42,15 +51,27 @@ class MainActivity : AppCompatActivity()  {
             "http://localhost/PaymentGatewayClient/success.php"
         )
 
+
+
+
         btn.setOnClickListener {
             val intent = Intent(this, PaymentActivity::class.java)
-            intent.putExtra("amount","10")
-            intent.putExtra("customer",customer)
-            intent.putExtra("url",url)
-            intent.putExtra("sdk_type",SDKType.TEST)
+            intent.putExtra(TechnoNextPaymentGateway.AMOUNT,"10")
+            intent.putExtra(TechnoNextPaymentGateway.CUSTOMER,customer)
+            intent.putExtra(TechnoNextPaymentGateway.URL,url)
+            intent.putExtra(TechnoNextPaymentGateway.SDKTYPE,SDKType.TEST)
             startForResult.launch(intent)
         }
 
+    }
+
+    private fun Activity.setStatusBarColor(colorId: Int) {
+        WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+        window.statusBarColor = ContextCompat.getColor(this, colorId)
+
+        if (colorId == R.color.black)
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars =
+                false
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

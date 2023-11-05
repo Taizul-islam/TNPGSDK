@@ -13,7 +13,14 @@ import com.technonext.payment.view.PaymentActivity
 
 class TechnoNextPaymentGateway{
 
+
+
+
     companion object{
+        val URL="url"
+        val AMOUNT="amount"
+        val CUSTOMER="customer"
+        val SDKTYPE="sdk_type"
        fun pay(context: Context, amount:String, customer: Customer, url: Url) {
            val activity = context as Activity
            Log.d("paybtn", "pay: ${customer.mobileNo}")

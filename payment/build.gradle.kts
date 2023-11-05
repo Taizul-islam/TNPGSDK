@@ -2,9 +2,16 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
-    id("maven-publish")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+
 
 }
+apply {
+    file("publish.gradle")
+}
+
+
+
 
 android {
     namespace = "com.technonext.payment"
@@ -12,14 +19,14 @@ android {
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources=false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

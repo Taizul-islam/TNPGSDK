@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.cheezycode.randomquote.viewmodels.HomeViewModelFactory
+import com.google.android.material.progressindicator.CircularProgressIndicator
 import com.technonext.payment.R
 import com.technonext.payment.adapter.CardTypeAdapter
 import com.technonext.payment.model.CardType
@@ -36,13 +38,9 @@ class CardFragment : Fragment() {
                     list = it.cardTypeList
                     adapter = CardTypeAdapter(requireActivity(), list, "card")
                     Common.setData(requireActivity(), mobileBankingRecycler, adapter!!)
-                }else{
-
                 }
-            }else{
-                adapter = CardTypeAdapter(requireActivity(), list, "card")
-                Common.setData(requireActivity(), mobileBankingRecycler, adapter!!)
             }
+
         }
 
         return view

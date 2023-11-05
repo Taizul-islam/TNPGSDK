@@ -7,6 +7,12 @@
     <application
         android:name=".utils.App"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="LIVE_API_BASE_URL"
+            android:value="${LIVE_API_BASE_URL}"/>
+        <meta-data
+            android:name="TEST_API_BASE_URL"
+            android:value="${TEST_API_BASE_URL}"/>
         <activity
             android:name=".view.WebActivity"
 
